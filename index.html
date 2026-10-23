@@ -4,13 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Termíny a revize</title>
-<meta name="theme-color" content="#f2f3f7">
+<meta name="theme-color" content="#f2f3f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#13151d" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Termíny">
 <link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<meta name="description" content="STK, revize, doklady a další termíny s historií a přehledem výdajů. Data zůstávají jen v zařízení.">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -67,7 +71,7 @@ h1{font-family:var(--display);font-size:1.75rem;margin:0;letter-spacing:-.015em}
 .note{font-size:.82rem;padding:9px 12px;border-radius:8px}
 .note.w{color:var(--warn);background:var(--warnbg)}
 .empty{color:var(--muted);text-align:center;padding:30px 10px}
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:.88rem;z-index:40;max-width:calc(100% - 32px);text-align:center}
+.toast{pointer-events:none;position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:.88rem;z-index:40;max-width:calc(100% - 32px);text-align:center}
 .fab{position:fixed;right:max(16px,calc(16px + env(safe-area-inset-right,0px)));bottom:calc(18px + env(safe-area-inset-bottom,0px));background:var(--accent);color:var(--accent-fg);border:0;border-radius:999px;padding:14px 20px;font:600 1rem var(--body);box-shadow:0 6px 18px rgba(0,0,0,.2);cursor:pointer;z-index:5}
 .sheet{position:fixed;inset:0;background:var(--scrim);display:flex;align-items:flex-end;justify-content:center;z-index:20}
 .panel{background:var(--card);width:100%;max-width:640px;max-height:92%;overflow:auto;-webkit-overflow-scrolling:touch;border-radius:16px 16px 0 0;padding-block:18px calc(18px + env(safe-area-inset-bottom,0px));padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:12px}
@@ -525,7 +529,7 @@ function openDone(id){
   $("d-hint").textContent=`Příští termín počítám ${repTxt(it.rep)} od data, kdy jsi to udělal. U pevných termínů (třeba dálniční známka) ho můžeš upravit.`;
   $("dsheet").hidden=false;lock(true);
 }
-$("d-done").onchange=()=>{const it=items.find(i=>i.id===doneId);if(it&&$("d-done").value)$("d-next").value=addMonths($("d-done").value,it.rep)};
+$("d-done").oninput=$("d-done").onchange=()=>{const it=items.find(i=>i.id===doneId);if(it&&$("d-done").value)$("d-next").value=addMonths($("d-done").value,it.rep)};
 $("d-cancel").onclick=closeSheets;
 $("dform").onsubmit=async e=>{
   e.preventDefault();
@@ -616,12 +620,19 @@ $("b-restore").onclick=async()=>{
 
 /* ---------- boot ---------- */
 document.addEventListener("visibilitychange",()=>{if(!document.hidden){const old=today.getTime();setToday();if(today.getTime()!==old)render()}});
+/* home-screen shortcuts: ?view=over opens the overview, ?add=1 opens a new entry */
+let openAddOnBoot=false;
+try{const q=new URLSearchParams(location.search);if(q.get("view")==="over")view="over";if(q.get("view")==="list")view="list";if(q.has("add")){view="list";openAddOnBoot=true}}catch(e){}
 (async()=>{
   const [v,m]=await Promise.all([Store.get(KEY),Store.get(META)]);
   if(m&&typeof m==="object")meta={lastBackup:isDate(m.lastBackup)?m.lastBackup:null};
   if(Array.isArray(v)){items=v.filter(x=>x&&isDate(x.date)).map(normalize)}else{items=SAMPLE.map(normalize);sample=true}
   render();
+  if(openAddOnBoot)openForm(null);
 })();
+</script>
+<script>
+if("serviceWorker" in navigator&&(location.protocol==="https:"||location.hostname==="localhost")){addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").catch(()=>{})})}
 </script>
 </body>
 </html>
