@@ -1,7 +1,7 @@
 /* terminy: offline cache.
    Page: network first (always revalidated, also behind GitHub Pages 10 min cache) with a 4 s limit, then the saved copy (updates arrive as soon as you are online).
    Other files: saved copy first, refreshed in the background. */
-const V="terminy-20261023143657";
+const V="terminy-20261023163018";
 const CORE=["./", "manifest.webmanifest", "apple-touch-icon.png", "icon-192.png", "icon-512.png", "icon-maskable-512.png", "favicon-32.png", "favicon.ico"];
 const EXT=/^(fonts\.googleapis\.com|fonts\.gstatic\.com|cdnjs\.cloudflare\.com)$/;
 const PAGE="./";
