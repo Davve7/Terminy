@@ -348,6 +348,9 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
       <button class="btn grow" id="b-csvh" type="button">Výdaje do Excelu</button>
     </div>
     <button class="btn" id="b-ics" type="button">Všechny termíny do Kalendáře</button>
+    <h4>Widget na ploše</h4>
+    <button class="btn" id="b-widget" type="button">Uložit přehled pro widget</button>
+    <p class="muted" style="font-size:.85rem;margin:0">V nabídce zvol <b>Uložit do Souborů → iCloud Drive → Scriptable</b>. Když se zeptá na stejný soubor, zvol <b>Nahradit</b>.</p>
     <h4>Koš</h4>
     <button class="btn" id="b-trash" type="button">Koš</button>
     <h4>Nastavení</h4>
@@ -1070,6 +1073,17 @@ $("f-ics").onclick=()=>{
   if(sample){toast("Tohle je ukázka. Přidej vlastní termín.");return}
   if(actDate(it)<todayIso){toast("Termín už uplynul. Nejdřív ho označ jako hotový, nebo změň datum.");return}
   exportIcs([it],`${slug(it.name)}.ics`);
+};
+/* ---------- overview for the home-screen widget (Scriptable reads prehled-*.json) ---------- */
+function widgetJson(){
+  const list=active().filter(it=>isDate(it.date)).map(it=>({it,d:actDate(it)})).sort((a,b)=>a.d.localeCompare(b.d)||a.it.name.localeCompare(b.it.name,"cs"));
+  return JSON.stringify({prehled:1,app:"terminy",nazev:"Termíny",ulozeno:new Date().toISOString(),varovaniDni:7,ukazatPoTerminu:true,
+    polozky:list.slice(0,20).map(x=>({text:x.it.notice>0?`${x.it.name} – výpověď`:x.it.name,datum:x.d,info:x.it.cat})),udaje:[]},null,1);
+}
+$("b-widget").onclick=async()=>{
+  if(sample){toast("Teď vidíš ukázková data. Nejdřív přidej vlastní termíny.");return}
+  const r=await saveFile("prehled-terminy.json","application/json",widgetJson());
+  if(r==="shared"||r==="download")toast("Přehled pro widget je uložený.");
 };
 $("b-ics").onclick=()=>{
   if(sample){toast("Tohle jsou ukázková data.");return}
