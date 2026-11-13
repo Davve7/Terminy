@@ -1,12 +1,18 @@
 /* terminy: offline cache.
    Page: network first (always revalidated, also behind GitHub Pages 10 min cache) with a 4 s limit, then the saved copy (updates arrive as soon as you are online).
    Other files: saved copy first, refreshed in the background. */
-const V="terminy-20261023163018";
+const V="terminy-20261112233005";
 const CORE=["./", "manifest.webmanifest", "apple-touch-icon.png", "icon-192.png", "icon-512.png", "icon-maskable-512.png", "favicon-32.png", "favicon.ico"];
+const EXTRA=["https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js", "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js"];
 const EXT=/^(fonts\.googleapis\.com|fonts\.gstatic\.com|cdnjs\.cloudflare\.com)$/;
 const PAGE="./";
 self.addEventListener("install",e=>{
-  e.waitUntil(caches.open(V).then(c=>Promise.all(CORE.map(u=>fetch(u,{cache:"reload"}).then(res=>{if(res.ok&&!res.redirected)return c.put(u,res)}).catch(()=>{})))).then(()=>self.skipWaiting()));
+  /* the PDF viewer comes from cdnjs: reuse the copy from the previous version, so it is downloaded only once */
+  e.waitUntil(caches.open(V).then(c=>Promise.all([
+    ...CORE.map(u=>fetch(u,{cache:"reload"}).then(res=>{if(res.ok&&!res.redirected)return c.put(u,res)}).catch(()=>{})),
+    /* best effort, at most 8 s, so a slow network never holds up the app */
+    ...EXTRA.map(u=>Promise.race([caches.match(u).then(hit=>hit||fetch(u,{mode:"cors"})).then(res=>{if(res&&(res.ok||res.type==="opaque"))return c.put(u,res)}).catch(()=>{}),new Promise(r=>setTimeout(r,8000))]))
+  ])).then(()=>self.skipWaiting()));
 });
 self.addEventListener("activate",e=>{
   e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(x=>x.startsWith("terminy-")&&x!==V).map(x=>caches.delete(x)))).then(()=>self.clients.claim()));

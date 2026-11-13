@@ -54,7 +54,7 @@ h1{font-family:var(--display);font-size:1.75rem;margin:0;letter-spacing:-.015em;
 .sub{color:var(--muted);margin:2px 0 0;font-size:.9rem}
 .ghost{font:600 .85rem var(--body);border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:8px;padding:8px 12px;cursor:pointer;white-space:nowrap;position:relative}
 .ghost.due::after{content:"";position:absolute;top:-3px;right:-3px;width:9px;height:9px;border-radius:50%;background:var(--warn);border:2px solid var(--bg)}
-.tabs{display:grid;grid-template-columns:1fr 1fr;background:var(--line);border-radius:10px;padding:3px;gap:3px}
+.tabs{display:grid;grid-template-columns:1fr 1fr 1fr;background:var(--line);border-radius:10px;padding:3px;gap:3px}
 .tabs button{font:600 .9rem var(--body);border:0;border-radius:8px;padding:9px;background:transparent;color:var(--muted);cursor:pointer}
 .tabs button[aria-selected="true"]{background:var(--card);color:var(--fg);box-shadow:0 1px 3px rgba(0,0,0,.12)}
 .chips{display:flex;gap:6px;flex-wrap:wrap}
@@ -94,6 +94,7 @@ h1{font-family:var(--display);font-size:1.75rem;margin:0;letter-spacing:-.015em;
 .fab{position:fixed;right:max(16px,calc(16px + env(safe-area-inset-right,0px)));bottom:calc(18px + env(safe-area-inset-bottom,0px));background:var(--accent);color:var(--accent-fg);border:0;border-radius:999px;padding:14px 20px;font:600 1rem var(--body);box-shadow:0 6px 18px rgba(0,0,0,.2);cursor:pointer;z-index:5}
 .sheet{position:fixed;inset:0;background:var(--scrim);display:flex;align-items:flex-end;justify-content:center;z-index:20}
 .sheet.top{z-index:25}
+.sheet.top2{z-index:27}
 .panel{background:var(--card);width:100%;max-width:640px;max-height:92%;overflow:auto;-webkit-overflow-scrolling:touch;border-radius:16px 16px 0 0;padding-block:18px calc(18px + env(safe-area-inset-bottom,0px));padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:12px}
 .panel h2{margin:0;font-family:var(--display);font-size:1.25rem}
 .panel h4{margin:8px 0 0;font-size:.72rem;font-family:var(--mono);font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
@@ -127,7 +128,9 @@ textarea{resize:vertical}
 .file-pick{position:relative;overflow:hidden;flex:1;text-align:center}
 .file-pick input{position:absolute;inset:0;opacity:0;cursor:pointer}
 .hist{display:flex;flex-direction:column;gap:2px;margin-top:4px}
-.hrow{display:flex;justify-content:space-between;gap:10px;font-size:.88rem;border-bottom:1px solid var(--line);padding:6px 0;font-variant-numeric:tabular-nums}
+.hrow{display:flex;justify-content:space-between;gap:10px;font-size:.88rem;border-bottom:1px solid var(--line);padding:8px 0;font-variant-numeric:tabular-nums}
+button.hrow{background:none;border:0;border-bottom:1px solid var(--line);width:100%;text-align:left;font-family:inherit;color:inherit;cursor:pointer;align-items:center}
+.hrow .chev{color:var(--muted);margin-left:4px}
 .hrow span:first-child{min-width:0;overflow-wrap:anywhere}
 .hrow.total{font-weight:600;border-bottom:0}
 .hrow em{font-style:normal;color:var(--muted);font-size:.78rem}
@@ -180,6 +183,46 @@ textarea{resize:vertical}
 .pair span{display:block;font-size:.76rem;color:var(--muted)}
 .pair b{font-family:var(--display);font-size:1.2rem;font-variant-numeric:tabular-nums}
 .budget-edit{display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:8px;align-items:center;font-size:.88rem}
+button:disabled{opacity:.5;cursor:default}
+/* history tab */
+#histView{display:flex;flex-direction:column;gap:12px}
+.hsum{color:var(--muted);font-size:.84rem;margin:0;font-variant-numeric:tabular-nums}
+.hmonth{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:10px 0 8px;font-weight:500}
+.rec{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;display:grid;grid-template-columns:44px minmax(0,1fr);gap:12px;cursor:pointer;text-align:left;font:inherit;color:inherit;width:100%}
+.rec .dd{text-align:center;font-family:var(--display);line-height:1.05;padding-top:2px}
+.rec .dd b{display:block;font-size:1.3rem;font-variant-numeric:tabular-nums}
+.rec .dd small{font-family:var(--body);font-size:.68rem;color:var(--muted);font-weight:600}
+.rec .rb{min-width:0;display:flex;flex-direction:column;gap:3px}
+.rec .rn{font-weight:600;overflow-wrap:anywhere}
+.rnote{font-size:.85rem;color:var(--fg);overflow-wrap:anywhere;white-space:pre-line;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.kind{display:inline-block;font-size:.7rem;font-weight:600;padding:1px 7px;border-radius:999px;background:var(--okbg);color:var(--ok)}
+.kind.cost{background:var(--infobg);color:var(--accent)}
+.athumbs{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:3px}
+.athumbs img,.athumbs .apdf{width:44px;height:44px;border-radius:6px;border:1px solid var(--line);object-fit:cover;background:var(--bg);display:block}
+.athumbs .apdf{display:flex;align-items:center;justify-content:center;font-size:.64rem;font-weight:700;color:var(--card);background:var(--bad);border-color:var(--bad)}
+/* attachment picker */
+.atts{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.att{position:relative;width:76px;height:76px;flex:none}
+.att>.v{width:100%;height:100%;border-radius:8px;border:1px solid var(--line);background:var(--bg);padding:0;overflow:hidden;cursor:zoom-in;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font:inherit;color:var(--fg)}
+.att img{width:100%;height:100%;object-fit:cover;display:block}
+.att .pdf b{font-size:.72rem;font-weight:700;color:var(--card);background:var(--bad);border-radius:4px;padding:1px 6px}
+.att .pdf span{font-size:.6rem;color:var(--muted);max-width:68px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
+.att .pdf{display:flex;flex-direction:column;align-items:center;gap:3px}
+.att>.x{position:absolute;top:-8px;right:-8px;min-width:26px;height:26px;border-radius:13px;border:2px solid var(--card);background:var(--bad);color:var(--card);font:700 .78rem/1 var(--body);cursor:pointer;padding:0 6px;white-space:nowrap}
+.addatt{position:relative;overflow:hidden;width:76px;height:76px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:.76rem;padding:6px;border-style:dashed}
+.addatt input{position:absolute;inset:0;opacity:0;cursor:pointer;font-size:16px}
+/* viewers */
+.viewer{position:fixed;inset:0;background:#000;z-index:30;display:flex;align-items:center;justify-content:center;padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)}
+.viewer img{max-width:100%;max-height:100%;object-fit:contain}
+.v-bar{position:absolute;top:calc(12px + env(safe-area-inset-top,0px));right:calc(12px + env(safe-area-inset-right,0px));display:flex;gap:8px}
+.v-bar button{font:600 .95rem var(--body);background:rgba(255,255,255,.18);color:#fff;border:0;border-radius:999px;padding:9px 14px;cursor:pointer}
+.pviewer{position:fixed;inset:0;z-index:30;background:var(--bg);display:flex;flex-direction:column}
+.pv-bar{display:flex;align-items:center;gap:8px;padding-top:calc(10px + env(safe-area-inset-top,0px));padding-bottom:10px;padding-left:max(12px,env(safe-area-inset-left,0px));padding-right:max(12px,env(safe-area-inset-right,0px));border-bottom:1px solid var(--line);background:var(--card)}
+.pv-bar strong{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.92rem}
+.pv-bar .btn{padding:8px 12px;font-size:.86rem}
+.pv-pages{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column;align-items:center;gap:10px;padding-block:12px calc(16px + env(safe-area-inset-bottom,0px));padding-left:max(10px,env(safe-area-inset-left,0px));padding-right:max(10px,env(safe-area-inset-right,0px))}
+.pv-pages canvas{background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.2);max-width:100%;height:auto}
+.pv-pages p{color:var(--muted);text-align:center;max-width:34ch;margin:30px auto 0}
 button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,.txt:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 </style>
 </head>
@@ -192,6 +235,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   <section class="alerts" id="alerts" hidden aria-live="polite"></section>
   <div class="tabs" role="tablist">
     <button type="button" role="tab" id="t-list" aria-selected="true">Termíny</button>
+    <button type="button" role="tab" id="t-hist" aria-selected="false">Historie</button>
     <button type="button" role="tab" id="t-over" aria-selected="false">Přehled</button>
   </div>
   <p id="sampleNote" class="note w" hidden>Ukázková data. Po uložení prvního vlastního termínu zmizí.</p>
@@ -204,6 +248,15 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
       <label>Řadit<select id="sort"><option value="termin">Podle termínu</option><option value="nazev">Podle názvu</option><option value="cena">Podle ceny</option></select></label>
     </div>
     <div id="groups"></div>
+  </div>
+  <div id="histView" hidden>
+    <input id="hq" type="search" placeholder="Hledat v historii: název, poznámka, místo…" autocomplete="off" aria-label="Hledat v historii">
+    <div class="tools">
+      <label>Kategorie<select id="hcat"></select></label>
+      <label>Rok<select id="hyear"></select></label>
+    </div>
+    <p class="hsum" id="hsum"></p>
+    <div id="hlist"></div>
   </div>
   <div id="overview" hidden></div>
 </div>
@@ -289,8 +342,40 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
       <label>Kde / kdo<input id="d-where" maxlength="80" placeholder="nepovinné"></label>
     </div>
     <label id="d-km-l" hidden>Stav km<input id="d-km" inputmode="numeric" placeholder="nepovinné"></label>
+    <label>Poznámka / zpráva<textarea id="d-note" rows="2" maxlength="1000" placeholder="Co se dělalo, co hlídat příště…"></textarea></label>
+    <div>
+      <h4 style="margin:0 0 8px">Přílohy: revizní zpráva, fotka, faktura</h4>
+      <div class="atts" id="d-atts"></div>
+    </div>
     <div class="btns">
       <button type="button" class="btn" id="d-cancel">Zrušit</button>
+      <button type="submit" class="btn pri">Uložit</button>
+    </div>
+  </form>
+</div>
+
+<!-- one history record: edit, note, attachments -->
+<div class="sheet top2" id="rsheet" hidden>
+  <form class="panel" id="rform" novalidate>
+    <h2 id="rtitle">Záznam</h2>
+    <p id="rsub"></p>
+    <div class="row">
+      <label>Datum<input id="r-date" type="date"></label>
+      <label>Částka (Kč)<input id="r-cost" inputmode="decimal" placeholder="nepovinné"></label>
+    </div>
+    <div class="row">
+      <label>Kde / kdo<input id="r-where" maxlength="80" placeholder="nepovinné"></label>
+      <label id="r-km-l" hidden>Stav km<input id="r-km" inputmode="numeric" placeholder="nepovinné"></label>
+    </div>
+    <label>Poznámka / zpráva<textarea id="r-note" rows="4" maxlength="1000" placeholder="Co se dělalo, co hlídat příště…"></textarea></label>
+    <div>
+      <h4 style="margin:0 0 8px">Přílohy</h4>
+      <div class="atts" id="r-atts"></div>
+    </div>
+    <button type="button" class="btn" id="r-open" hidden>Otevřít termín</button>
+    <div class="btns">
+      <button type="button" class="btn del" id="r-del">Smazat záznam</button>
+      <button type="button" class="btn" id="r-cancel">Zrušit</button>
       <button type="submit" class="btn pri">Uložit</button>
     </div>
   </form>
@@ -337,6 +422,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
     <details>
       <summary style="cursor:pointer;font-size:.88rem;color:var(--muted)">Záloha přes schránku (text)</summary>
       <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
+        <p>Text neobsahuje fotky a PDF. Ty jsou jen v záloze do souboru.</p>
         <button class="btn" id="b-copy" type="button">Zkopírovat zálohu jako text</button>
         <label>Obnovit z textu<textarea id="b-text" rows="3" placeholder="Sem vlož zkopírovanou zálohu"></textarea></label>
         <button class="btn" id="b-restore" type="button">Obnovit z textu</button>
@@ -348,9 +434,6 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
       <button class="btn grow" id="b-csvh" type="button">Výdaje do Excelu</button>
     </div>
     <button class="btn" id="b-ics" type="button">Všechny termíny do Kalendáře</button>
-    <h4>Widget na ploše</h4>
-    <button class="btn" id="b-widget" type="button">Uložit přehled pro widget</button>
-    <p class="muted" style="font-size:.85rem;margin:0">V nabídce zvol <b>Uložit do Souborů → iCloud Drive → Scriptable</b>. Když se zeptá na stejný soubor, zvol <b>Nahradit</b>.</p>
     <h4>Koš</h4>
     <button class="btn" id="b-trash" type="button">Koš</button>
     <h4>Nastavení</h4>
@@ -375,6 +458,14 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
     </div>
   </div>
 </div>
+
+<div class="pviewer" id="pviewer" hidden>
+  <div class="pv-bar"><strong id="pv-name">Dokument.pdf</strong>
+    <button type="button" class="btn" id="pv-share">Sdílet</button>
+    <button type="button" class="btn pri" id="pv-close" style="flex:0">Zavřít</button></div>
+  <div class="pv-pages" id="pv-pages"></div>
+</div>
+<div class="viewer" id="viewer" hidden><img id="v-img" alt="Příloha"><div class="v-bar"><button type="button" id="v-share">Sdílet</button><button type="button" id="v-close">Zavřít</button></div></div>
 
 <script>
 /*CORE-START*/
@@ -458,8 +549,20 @@ const Store={
   async set(k,v){
     try{this.db=this.db||await this.open();await new Promise((res,rej)=>{const t=this.db.transaction("kv","readwrite");t.objectStore("kv").put(v,k);t.oncomplete=res;t.onerror=()=>rej(t.error);t.onabort=()=>rej(t.error)});try{localStorage.removeItem(k)}catch(e){}return true}catch(e){}
     try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){return false}
+  },
+  async del(k){
+    try{localStorage.removeItem(k)}catch(e){}
+    try{this.db=this.db||await this.open();await new Promise((res,rej)=>{const t=this.db.transaction("kv","readwrite");t.objectStore("kv").delete(k);t.oncomplete=res;t.onerror=()=>rej(t.error);t.onabort=()=>rej(t.error)})}catch(e){}
+  },
+  async keys(prefix){
+    const out=new Set();
+    try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith(prefix))out.add(k)}}catch(e){}
+    try{this.db=this.db||await this.open();const ks=await new Promise((res,rej)=>{const q=this.db.transaction("kv").objectStore("kv").getAllKeys();q.onsuccess=()=>res(q.result);q.onerror=()=>rej(q.error)});for(const k of ks)if(typeof k==="string"&&k.startsWith(prefix))out.add(k)}catch(e){}
+    return [...out];
   }
 };
+/* photos and PDFs live under their own keys, so saving a termín never rewrites them */
+const ATT="terminy-att:";
 try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}
 
 /* ---------- helpers ---------- */
@@ -502,6 +605,14 @@ const QUICK=[
 
 /* ---------- data model ---------- */
 const DEF_ALERTS=()=>({days:[30,7,1],over:true});
+const newRid=()=>"r"+Math.random().toString(36).slice(2,10);
+const MAX_FILES=10,MAX_PDF=20*1048576;
+const THUMB_RE=/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/;
+function normFiles(list){
+  const ids=new Set();
+  return (Array.isArray(list)?list:[]).filter(f=>f&&typeof f.id==="string"&&/^[\w-]{4,40}$/.test(f.id)&&!ids.has(f.id)&&ids.add(f.id)&&(f.type==="application/pdf"||/^image\/(jpeg|png|webp)$/.test(f.type)))
+    .slice(0,MAX_FILES).map(f=>({id:f.id,name:String(f.name||"příloha").slice(0,120),type:f.type,size:Number.isFinite(+f.size)&&+f.size>0?Math.round(+f.size):0,thumb:typeof f.thumb==="string"&&f.thumb.length<60000&&THUMB_RE.test(f.thumb)?f.thumb:""}));
+}
 function normalize(x){
   const out={id:String(x.id||"u"+Math.random().toString(36).slice(2,10)),name:String(x.name||"").trim().slice(0,120)||"Bez názvu",
     cat:typeof x.cat==="string"&&x.cat.trim()?x.cat.trim().slice(0,30):"Ostatní",date:x.date,note:String(x.note||"").slice(0,500)};
@@ -518,9 +629,13 @@ function normalize(x){
   const a=x.alerts&&typeof x.alerts==="object"?x.alerts:null;
   out.alerts=a?{days:(Array.isArray(a.days)?a.days:[]).map(Number).filter(n=>[30,7,1].includes(n)),over:!!a.over}:DEF_ALERTS();
   out.ack=x.ack&&typeof x.ack==="object"?Object.fromEntries(Object.entries(x.ack).filter(([k,v])=>/^(over|d\d+)$/.test(k)&&isDate(v))):{};
-  out.history=(Array.isArray(x.history)?x.history:[]).filter(e=>e&&isDate(e.date)).map(e=>({date:e.date,due:isDate(e.due)?e.due:null,
-    cost:e.cost===""||e.cost==null||isNaN(+e.cost)?"":+e.cost,where:String(e.where||"").slice(0,80),km:Number.isInteger(+e.km)&&e.km!==""&&e.km!=null?+e.km:"",kind:e.kind==="cost"?"cost":"done"}));
-  if(!out.history.length&&isDate(x.lastDone))out.history.push({date:x.lastDone,due:null,cost:"",where:"",km:"",kind:"done"});
+  const seen=new Set();
+  out.history=(Array.isArray(x.history)?x.history:[]).filter(e=>e&&isDate(e.date)).map(e=>{
+    let rid=typeof e.rid==="string"&&/^[\w-]{2,40}$/.test(e.rid)?e.rid:newRid();while(seen.has(rid))rid=newRid();seen.add(rid);
+    return {rid,date:e.date,due:isDate(e.due)?e.due:null,
+    cost:e.cost===""||e.cost==null||isNaN(+e.cost)?"":+e.cost,where:String(e.where||"").slice(0,80),km:Number.isInteger(+e.km)&&e.km!==""&&e.km!=null?+e.km:"",kind:e.kind==="cost"?"cost":"done",
+    note:String(e.note||"").slice(0,1000),files:normFiles(e.files)}});
+  if(!out.history.length&&isDate(x.lastDone))out.history.push({rid:newRid(),date:x.lastDone,due:null,cost:"",where:"",km:"",kind:"done",note:"",files:[]});
   out.history.sort((p,q)=>p.date.localeCompare(q.date));
   out.status=x.status==="done"?"done":"active";
   out.doneAt=isDate(x.doneAt)?x.doneAt:null;
@@ -550,7 +665,7 @@ const visibleItems=()=>items.filter(i=>!i.deleted);
 const plus=n=>addDays(todayIso,n);
 const SAMPLE=[
  {id:"s1",name:"Přezutí na zimní pneu",cat:"Auto",date:plus(8),every:M(6),mode:"done",f:{vehicle:"Octavia 1AB 2345"},history:[{date:plus(-372),due:plus(-375),cost:800,where:"Pneuservis"},{date:plus(-190),due:plus(-185),cost:800,where:"Pneuservis"}]},
- {id:"s2",name:"Revize plynového kotle",cat:"Dům",date:plus(-5),every:Y(1),mode:"done",f:{device:"kotel Vaillant"},expected:1900,history:[{date:plus(-735),due:plus(-735),cost:1700,where:"Topenář Novák"},{date:plus(-370),due:plus(-370),cost:1850,where:"Topenář Novák"}]},
+ {id:"s2",name:"Revize plynového kotle",cat:"Dům",date:plus(-5),every:Y(1),mode:"done",f:{device:"kotel Vaillant"},expected:1900,history:[{date:plus(-735),due:plus(-735),cost:1700,where:"Topenář Novák"},{date:plus(-370),due:plus(-370),cost:1850,where:"Topenář Novák",note:"Vyměněno těsnění hořáku. Příště zkontrolovat expanzní nádobu."}]},
  {id:"s3",name:"STK Octavia",cat:"Auto",date:plus(52),every:Y(2),mode:"done",expected:1800,f:{vehicle:"Octavia 1AB 2345",km:84500},history:[{date:plus(-678),cost:1600,where:"STK Brno-Líšeň",km:61200}]},
  {id:"s4",name:"Pojištění domácnosti",cat:"Smlouvy",date:plus(75),every:Y(1),mode:"due",notice:42,expected:4200,f:{payment:350}},
  {id:"s5",name:"Občanský průkaz",cat:"Doklady",date:plus(900),every:Y(10),mode:"due",f:{person:"Jana"}},
@@ -559,20 +674,21 @@ const SAMPLE=[
 
 /* ---------- state ---------- */
 let items=[],sample=false,meta=DEF_META(),view="list",statusF="all",catF="",sortF="termin",selMonth=0,editId=null,doneId=null,editBudgets=false;
-try{const v=localStorage.getItem("terminy-view");if(v==="over")view="over";const s=localStorage.getItem("terminy-sort");if(["termin","nazev","cena"].includes(s))sortF=s}catch(e){}
+try{const v=localStorage.getItem("terminy-view");if(v==="over"||v==="hist")view=v;const s=localStorage.getItem("terminy-sort");if(["termin","nazev","cena"].includes(s))sortF=s}catch(e){}
 
 /* ---------- list ---------- */
 const STATUS=[["all","Aktivní"],["over","Po termínu"],["d7","7 dní"],["d30","30 dní"],["done","Splněné"]];
-function matchQ(it,q){if(!q)return true;return [it.name,it.note,it.cat,it.f.vehicle,it.f.vin,it.f.person,it.f.device,...it.history.map(h=>h.where)].join(" ").toLowerCase().includes(q)}
+function matchQ(it,q){if(!q)return true;return [it.name,it.note,it.cat,it.f.vehicle,it.f.vin,it.f.person,it.f.device,...it.history.map(h=>h.where+" "+h.note)].join(" ").toLowerCase().includes(q)}
 function render(){
   const act=active().map(it=>({it,d:dayDiff(actDate(it),todayIso)}));
   const late=act.filter(x=>x.d<0).length,soon=act.filter(x=>x.d>=0&&x.d<=30).length;
   $("sub").textContent=!act.length?"Zatím nic nehlídáš":late?`${late} po termínu · ${soon} do 30 dní`:soon?`${soon} do 30 dní`:"Do 30 dní nic nečeká";
   $("sampleNote").hidden=!(sample&&items.length);
   renderBackupNote();renderAlerts();updateBadge();
-  $("t-list").setAttribute("aria-selected",view==="list");$("t-over").setAttribute("aria-selected",view==="over");
-  $("listView").hidden=view!=="list";$("overview").hidden=view!=="over";
+  $("t-list").setAttribute("aria-selected",view==="list");$("t-hist").setAttribute("aria-selected",view==="hist");$("t-over").setAttribute("aria-selected",view==="over");
+  $("listView").hidden=view!=="list";$("histView").hidden=view!=="hist";$("overview").hidden=view!=="over";
   if(view==="over"){renderOverview();return}
+  if(view==="hist"){renderHistory();return}
   const q=$("q").value.trim().toLowerCase();
   const pool=statusF==="done"?visibleItems().filter(i=>i.status==="done"):active();
   const base=pool.filter(it=>(!catF||it.cat===catF)&&matchQ(it,q)).map(it=>({it,d:it.status==="active"?dayDiff(actDate(it),todayIso):null}));
@@ -814,6 +930,53 @@ $("overview").addEventListener("click",e=>{
 function setView(v){view=v;try{localStorage.setItem("terminy-view",v)}catch(e){}render();window.scrollTo(0,0)}
 $("t-list").onclick=()=>setView("list");
 $("t-over").onclick=()=>setView("over");
+$("t-hist").onclick=()=>setView("hist");
+
+/* ---------- history tab: everything done, newest first ---------- */
+let hCat="",hYear="",hLimit=200;
+const monthName=m=>P(m+"-01").toLocaleDateString("cs-CZ",{month:"long",year:"numeric"});
+function recText(it,h){return [it.name,it.cat,h.where,h.note,it.f.vehicle,it.f.person,it.f.device,...h.files.map(f=>f.name)].join(" ").toLowerCase()}
+function renderHistory(){
+  const q=$("hq").value.trim().toLowerCase();
+  const recs=visibleItems().flatMap(it=>it.history.map(h=>({it,h})));
+  const years=[...new Set(recs.map(r=>r.h.date.slice(0,4)))].sort().reverse();
+  if(hYear&&!years.includes(hYear))hYear="";
+  $("hyear").innerHTML=`<option value="">Všechny</option>`+years.map(y=>`<option ${y===hYear?"selected":""}>${y}</option>`).join("");
+  const cats=allCats().filter(c=>recs.some(r=>r.it.cat===c));
+  if(hCat&&!cats.includes(hCat))hCat="";
+  $("hcat").innerHTML=`<option value="">Všechny</option>`+cats.map(c=>`<option ${c===hCat?"selected":""}>${esc(c)}</option>`).join("");
+  const list=recs.filter(r=>(!hCat||r.it.cat===hCat)&&(!hYear||r.h.date.startsWith(hYear))&&(!q||recText(r.it,r.h).includes(q)))
+    .sort((a,b)=>b.h.date.localeCompare(a.h.date)||a.it.name.localeCompare(b.it.name,"cs"));
+  const sum=list.reduce((s,r)=>s+(+r.h.cost||0),0),nf=list.reduce((s,r)=>s+r.h.files.length,0);
+  $("hsum").textContent=list.length?`${list.length} ${pl(list.length,"záznam","záznamy","záznamů")}${sum?` · ${kc(sum)}`:""}${nf?` · ${nf} ${pl(nf,"příloha","přílohy","příloh")}`:""}`:"";
+  if(!list.length){
+    $("hlist").innerHTML=`<div class="empty">${!recs.length?"Zatím tu nic není. Když u termínu klepneš na Hotovo nebo zapíšeš výdaj, objeví se to tady.":"Nic neodpovídá hledání."}</div>`;return;
+  }
+  let html="",lastM="";
+  for(const r of list.slice(0,hLimit)){
+    const m=r.h.date.slice(0,7);
+    if(m!==lastM){if(lastM)html+="</div>";html+=`<h3 class="hmonth">${monthName(m)}</h3><div class="list">`;lastM=m}
+    html+=recRow(r);
+  }
+  html+="</div>";
+  if(list.length>hLimit)html+=`<button type="button" class="btn" id="hmore" style="width:100%;margin-top:12px">Zobrazit další (${list.length-hLimit})</button>`;
+  $("hlist").innerHTML=html;
+}
+function recRow({it,h}){
+  const d=P(h.date),meta=[`<span class="kind${h.kind==="cost"?" cost":""}">${h.kind==="cost"?"výdaj":"splněno"}</span>`,`<span><span class="dot" style="background:${catCol(it.cat)}"></span>${esc(it.cat)}</span>`];
+  if(h.cost!=="")meta.push(`<span>${kc(h.cost)}</span>`);
+  if(h.where)meta.push(`<span>${esc(h.where)}</span>`);
+  if(h.km!=="")meta.push(`<span>${h.km.toLocaleString("cs-CZ")} km</span>`);
+  const th=h.files.length?`<span class="athumbs">${h.files.slice(0,6).map(f=>f.type==="application/pdf"?`<span class="apdf">PDF</span>`:f.thumb?`<img src="${f.thumb}" alt="">`:`<span class="apdf">FOTO</span>`).join("")}${h.files.length>6?`<span class="muted">+${h.files.length-6}</span>`:""}</span>`:"";
+  return `<button type="button" class="rec" data-it="${esc(it.id)}" data-rid="${esc(h.rid)}"><span class="dd"><b>${d.getDate()}.</b><small>${d.toLocaleDateString("cs-CZ",{month:"short"})}</small></span><span class="rb"><span class="rn">${esc(it.name)}</span><span class="meta">${meta.join("")}</span>${h.note?`<span class="rnote">${esc(h.note)}</span>`:""}${th}</span></button>`;
+}
+$("hq").oninput=()=>{hLimit=200;renderHistory()};
+$("hcat").onchange=()=>{hCat=$("hcat").value;hLimit=200;renderHistory()};
+$("hyear").onchange=()=>{hYear=$("hyear").value;hLimit=200;renderHistory()};
+$("hlist").onclick=e=>{
+  if(e.target.id==="hmore"){hLimit+=200;renderHistory();return}
+  const b=e.target.closest("[data-rid]");if(b)openRecord(b.dataset.it,b.dataset.rid);
+};
 
 /* ---------- small UI helpers ---------- */
 function toast(t,actionLabel,action){
@@ -822,17 +985,24 @@ function toast(t,actionLabel,action){
   el.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>el.hidden=true,actionLabel?6000:3000);
 }
 function lock(on){document.documentElement.style.overflow=on?"hidden":""}
-async function persist(){if(sample)return true;const ok=await Store.set(KEY,items);if(!ok)toast("Uložení se nepovedlo. Zkus to znovu.");return ok}
-async function saveMeta(){await Store.set(META,meta)}
+/* new photos or PDFs (for example after a restore) must be read before the backup can be saved */
+function dataChanging(){}
+function dataChanged(){if(!$("bsheet").hidden)startPrepare()}
+async function persist(){if(sample)return true;dataChanging();const ok=await Store.set(KEY,items);if(!ok)toast("Uložení se nepovedlo. Zkus to znovu.");dataChanged();return ok}
+/* settings are part of the backup too, so a change while the panel is open rebuilds it */
+async function saveMeta(){dataChanging();await Store.set(META,meta);dataChanged()}
 function armed(btn,label,armedLabel){
   if(btn.dataset.armed==="1"){disarm(btn,label);return true}
   btn.dataset.armed="1";btn.textContent=armedLabel;btn.classList.add("armed");
   clearTimeout(btn._t);btn._t=setTimeout(()=>disarm(btn,label),3500);return false;
 }
 function disarm(btn,label){btn.dataset.armed="";btn.textContent=label;btn.classList.remove("armed");clearTimeout(btn._t)}
-const SHEETS=["tsheet","csheet","dsheet","bsheet","sheet"];
-function closeSheets(){SHEETS.forEach(id=>$(id).hidden=true);lock(false)}
-function closeTop(){const open=SHEETS.find(id=>!$(id).hidden);if(!open)return;$(open).hidden=true;if(!SHEETS.some(id=>!$(id).hidden))lock(false)}
+const SHEETS=["rsheet","tsheet","csheet","dsheet","bsheet","sheet"];
+function closeSheets(){SHEETS.forEach(id=>$(id).hidden=true);closeViewers();attCache.clear();lock(false)}
+function closeTop(){
+  if(!$("pviewer").hidden||!$("viewer").hidden){closeViewers();return}
+  const open=SHEETS.find(id=>!$(id).hidden);if(!open)return;$(open).hidden=true;if(open==="bsheet")attCache.clear();if(!SHEETS.some(id=>!$(id).hidden))lock(false);
+}
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeTop()});
 SHEETS.forEach(id=>$(id).addEventListener("click",e=>{if(e.target.id===id)closeTop()}));
 /* share sheet on iPhone ("Uložit do Souborů", Kalendář), normal download elsewhere */
@@ -876,16 +1046,186 @@ function openForm(it){
 function renderHist(it){
   const h=it?it.history:[];$("histBox").hidden=!h.length;if(!h.length)return;
   const total=h.reduce((s,e)=>s+(+e.cost||0),0);
-  $("hist").innerHTML=h.slice().reverse().map((e,i)=>`<div class="hrow"><span>${fmtD(e.date)}${e.kind==="cost"?" · <em>výdaj</em>":""}${e.where?` · ${esc(e.where)}`:""}${e.km!==""?` · ${e.km.toLocaleString("cs-CZ")} km`:""}</span><span>${e.cost!==""?kc(e.cost):"—"} <button type="button" class="mini" data-hdel="${h.length-1-i}" aria-label="Smazat záznam" style="padding:2px 7px">×</button></span></div>`).join("")+
+  $("hist").innerHTML=h.slice().reverse().map(e=>`<button type="button" class="hrow" data-it="${esc(it.id)}" data-rid="${esc(e.rid)}"><span>${fmtD(e.date)}${e.kind==="cost"?" · <em>výdaj</em>":""}${e.where?` · ${esc(e.where)}`:""}${e.km!==""?` · ${e.km.toLocaleString("cs-CZ")} km`:""}${e.note?` · <em>${esc(e.note.length>40?e.note.slice(0,40)+"…":e.note)}</em>`:""}${e.files.length?` · <em>${e.files.length} ${pl(e.files.length,"příloha","přílohy","příloh")}</em>`:""}</span><span>${e.cost!==""?kc(e.cost):"—"}<span class="chev" aria-hidden="true">›</span></span></button>`).join("")+
     (total&&h.length>1?`<div class="hrow total"><span>Celkem</span><span>${kc(total)}</span></div>`:"");
 }
-$("hist").addEventListener("click",async e=>{
-  const b=e.target.closest("[data-hdel]");if(!b)return;
-  if(!armed(b,"×","Smazat?"))return;
-  const it=items.find(i=>i.id===editId);if(!it||sample)return;
-  const prev=it.history;it.history=it.history.filter((_,i)=>i!==+b.dataset.hdel);
-  if(await persist()){renderHist(it);render()}else it.history=prev;
-});
+$("hist").addEventListener("click",e=>{const b=e.target.closest("[data-rid]");if(b)openRecord(b.dataset.it,b.dataset.rid)});
+
+/* ---------- attachments ---------- */
+const fmtSize=b=>b>=1048576?(b/1048576).toLocaleString("cs-CZ",{maximumFractionDigits:1})+" MB":Math.max(1,Math.round(b/1024))+" kB";
+const newAttId=()=>"a"+Date.now().toString(36)+Math.random().toString(36).slice(2,8);
+function readAsDataURL(blob){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(String(r.result));r.onerror=()=>rej(r.error);r.readAsDataURL(blob)})}
+function loadImage(file){return new Promise((res,rej)=>{const url=URL.createObjectURL(file),img=new Image();img.onload=()=>res({img,url});img.onerror=()=>{URL.revokeObjectURL(url);rej(new Error("img"))};img.src=url})}
+function drawScaled(img,max,q){
+  const s=Math.min(1,max/Math.max(img.naturalWidth,img.naturalHeight)),c=document.createElement("canvas");
+  c.width=Math.max(1,Math.round(img.naturalWidth*s));c.height=Math.max(1,Math.round(img.naturalHeight*s));
+  const g=c.getContext("2d");g.fillStyle="#fff";g.fillRect(0,0,c.width,c.height);g.drawImage(img,0,0,c.width,c.height);
+  return c.toDataURL("image/jpeg",q);
+}
+/* a photo is scaled to 2000 px (sharp enough to read a printed report) with a small preview for lists */
+async function prepFile(f){
+  const name=f.name||"",isPdf=f.type==="application/pdf"||/\.pdf$/i.test(name);
+  if(isPdf){
+    if(f.size>MAX_PDF)throw new Error(`${name||"PDF"} je moc velké (${fmtSize(f.size)}). Limit je 20 MB.`);
+    let data=(await readAsDataURL(f)).replace(/^data:[^;,]*/,"data:application/pdf");
+    if(!/^data:application\/pdf;base64,JVBERi/.test(data))throw new Error(`${name||"Soubor"} není platné PDF.`);
+    return {ref:{id:newAttId(),name:name||"dokument.pdf",type:"application/pdf",size:f.size,thumb:""},data};
+  }
+  if(!/^image\//.test(f.type||"")&&!/\.(jpe?g|png|heic|heif|webp|gif)$/i.test(name))throw new Error(`${name||"Soubor"} není fotka ani PDF.`);
+  let loaded;try{loaded=await loadImage(f)}catch(e){throw new Error(`Fotku ${name} se nepodařilo načíst.`)}
+  try{
+    const data=drawScaled(loaded.img,2000,.82),thumb=drawScaled(loaded.img,160,.6);
+    return {ref:{id:newAttId(),name:(name.replace(/\.[^.]+$/,"")||"foto")+".jpg",type:"image/jpeg",size:Math.round((data.length-23)*3/4),thumb},data};
+  }finally{URL.revokeObjectURL(loaded.url)}
+}
+const dataToBytes=d=>{const b=atob(d.slice(d.indexOf(",")+1)),u=new Uint8Array(b.length);for(let i=0;i<b.length;i++)u[i]=b.charCodeAt(i);return u};
+async function attData(x){if(x.data)return x.data;const v=await Store.get(ATT+x.ref.id);return v&&typeof v.data==="string"?v.data:null}
+/* write new attachments before the record that points to them; on failure nothing else is saved */
+async function storePending(list){
+  for(const x of list)if(x.data&&!x.stored){
+    if(!await Store.set(ATT+x.ref.id,{name:x.ref.name,type:x.ref.type,size:x.ref.size,data:x.data})){toast("Přílohu se nepodařilo uložit. V zařízení je možná málo místa.");return false}
+    x.stored=true;
+  }
+  return true;
+}
+let busy=0;
+function setBusy(){document.querySelectorAll("#dform [type=submit],#rform [type=submit]").forEach(b=>b.disabled=busy>0)}
+const Picker=id=>({el:$(id),list:[]});
+const dPick=Picker("d-atts"),rPick=Picker("r-atts");
+function renderPicker(pk){
+  pk.el.innerHTML=pk.list.map((x,i)=>{const r=x.ref;
+    const inner=r.type==="application/pdf"?`<span class="pdf"><b>PDF</b><span>${esc(r.name)}</span></span>`:r.thumb?`<img src="${r.thumb}" alt="">`:`<span class="pdf"><span>${esc(r.name)}</span></span>`;
+    return `<div class="att"><button type="button" class="v" data-av="${i}" aria-label="Otevřít ${esc(r.name)}">${inner}</button><button type="button" class="x" data-ax="${i}" aria-label="Odebrat ${esc(r.name)}">×</button></div>`}).join("")+
+    (pk.list.length<MAX_FILES?`<span class="btn addatt">${busy?"Načítám…":pk.list.length?"Přidat další":"Fotka nebo PDF"}<input type="file" accept="image/*,application/pdf,.pdf" multiple aria-label="Přidat fotku nebo PDF"></span>`:"");
+  const inp=pk.el.querySelector("input[type=file]");if(inp)inp.onchange=e=>addFiles(pk,e.target.files);
+}
+async function addFiles(pk,files){
+  const arr=[...(files||[])];if(!arr.length)return;
+  if(sample){toast("Tohle je ukázka. Přidej vlastní termín.");renderPicker(pk);return}
+  const room=MAX_FILES-pk.list.length;
+  if(arr.length>room)toast(`K jednomu záznamu jde přidat nejvýš ${MAX_FILES} příloh.`);
+  busy++;setBusy();renderPicker(pk);
+  for(const f of arr.slice(0,Math.max(0,room))){
+    try{pk.list.push(await prepFile(f))}catch(e){toast(e&&e.message&&!/^img$/.test(e.message)?e.message:"Soubor se nepodařilo přidat.")}
+  }
+  busy--;setBusy();renderPicker(pk);
+}
+function bindPicker(pk){
+  pk.el.addEventListener("click",e=>{
+    const x=e.target.closest("[data-ax]");
+    if(x){if(!armed(x,"×","Odebrat?"))return;pk.list.splice(+x.dataset.ax,1);renderPicker(pk);return}
+    const v=e.target.closest("[data-av]");if(v)openAtt(pk.list[+v.dataset.av]);
+  });
+}
+bindPicker(dPick);bindPicker(rPick);
+
+/* ---------- viewers ---------- */
+let viewing=null,pvToken=0;
+const touchDevice=()=>!!(window.matchMedia&&matchMedia("(pointer: coarse)").matches);
+async function openAtt(x){
+  if(!x)return;
+  const data=await attData(x);
+  if(!data){toast("Tahle příloha v zařízení chybí. Obnov ji ze zálohy do souboru, ve které je.");return}
+  viewing={name:x.ref.name,type:x.ref.type,data};
+  if(x.ref.type==="application/pdf")showPdf();
+  else{$("v-img").src=data;$("v-share").textContent=touchDevice()?"Sdílet":"Stáhnout";$("viewer").hidden=false}
+}
+const PDFJS="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/";
+let pdfjsP=null;
+function loadPdfJs(){
+  if(window.pdfjsLib)return Promise.resolve(window.pdfjsLib);
+  if(pdfjsP)return pdfjsP;
+  pdfjsP=new Promise((res,rej)=>{
+    const sc=document.createElement("script");sc.src=PDFJS+"pdf.min.js";
+    const to=setTimeout(()=>{pdfjsP=null;rej(new Error("timeout"))},15000);
+    sc.onload=()=>{clearTimeout(to);try{window.pdfjsLib.GlobalWorkerOptions.workerSrc=PDFJS+"pdf.worker.min.js";res(window.pdfjsLib)}catch(e){pdfjsP=null;rej(e)}};
+    sc.onerror=()=>{clearTimeout(to);pdfjsP=null;sc.remove();rej(new Error("load"))};
+    document.head.appendChild(sc);
+  });
+  return pdfjsP;
+}
+async function showPdf(){
+  const doc=viewing,token=++pvToken,box=$("pv-pages");
+  $("pv-name").textContent=doc.name;$("pv-share").textContent=touchDevice()?"Sdílet":"Stáhnout";
+  box.innerHTML="<p>Načítám náhled…</p>";$("pviewer").hidden=false;
+  try{
+    const lib=await loadPdfJs();
+    const pdf=await lib.getDocument({data:dataToBytes(doc.data)}).promise;
+    if(token!==pvToken)return;
+    box.innerHTML="";
+    const w=Math.min((box.clientWidth||380)-20,900),dpr=Math.min(2,window.devicePixelRatio||1),n=Math.min(pdf.numPages,30);
+    for(let i=1;i<=n;i++){
+      const page=await pdf.getPage(i);if(token!==pvToken||$("pviewer").hidden)return;
+      const v1=page.getViewport({scale:1}),vp=page.getViewport({scale:w/v1.width*dpr});
+      const c=document.createElement("canvas");c.width=Math.floor(vp.width);c.height=Math.floor(vp.height);c.style.width=w+"px";c.setAttribute("aria-label",`Strana ${i}`);
+      box.appendChild(c);await page.render({canvasContext:c.getContext("2d"),viewport:vp}).promise;
+    }
+    if(pdf.numPages>n){const p=document.createElement("p");p.textContent=`Zobrazeno ${n} z ${pdf.numPages} stran. Celé PDF otevřeš přes Sdílet.`;box.appendChild(p)}
+  }catch(e){
+    if(token!==pvToken)return;
+    box.innerHTML=`<p>${navigator.onLine===false?"Náhled PDF potřebuje při prvním otevření internet.":"Náhled se nepodařilo zobrazit."} Dokument otevřeš nebo uložíš přes tlačítko ${touchDevice()?"Sdílet":"Stáhnout"}.</p>`;
+  }
+}
+function closeViewers(){pvToken++;$("pviewer").hidden=true;$("pv-pages").innerHTML="";$("viewer").hidden=true;$("v-img").removeAttribute("src");viewing=null}
+function shareViewing(){if(viewing)saveFile(viewing.name,viewing.type,new Blob([dataToBytes(viewing.data)],{type:viewing.type}))}
+$("pv-close").onclick=closeViewers;$("v-close").onclick=closeViewers;
+$("pv-share").onclick=shareViewing;$("v-share").onclick=shareViewing;
+$("viewer").addEventListener("click",e=>{if(e.target.id==="viewer"||e.target.id==="v-img")closeViewers()});
+
+/* ---------- one history record ---------- */
+let recCtx=null;
+function openRecord(itId,rid){
+  const it=items.find(i=>i.id===itId),h=it&&it.history.find(x=>x.rid===rid);if(!h)return;
+  recCtx={itId,rid};
+  $("rtitle").textContent=it.name;
+  $("rsub").textContent=(h.kind==="cost"?"Výdaj":"Splnění")+(h.kind==="done"&&h.due?` · termín byl ${fmtD(h.due)}`:"")+` · ${it.cat}`;
+  $("r-date").value=h.date;$("r-date").max=todayIso;
+  $("r-cost").value=h.cost!==""?String(h.cost).replace(".",","):"";$("r-where").value=h.where;
+  $("r-km").value=h.km;$("r-km-l").hidden=FIELDS[it.cat]!=="auto"&&h.km==="";
+  $("r-where").closest(".row").style.gridTemplateColumns=$("r-km-l").hidden?"minmax(0,1fr)":"";
+  $("r-note").value=h.note;
+  rPick.list=h.files.map(ref=>({ref}));renderPicker(rPick);
+  $("r-open").hidden=!$("sheet").hidden;
+  disarm($("r-del"),"Smazat záznam");$("rsheet").hidden=false;lock(true);
+}
+function afterRecordChange(it){$("rsheet").hidden=true;if(!$("sheet").hidden&&editId===it.id)renderHist(it);else if(!SHEETS.some(id=>!$(id).hidden))lock(false);render()}
+$("r-cancel").onclick=closeTop;
+$("r-open").onclick=()=>{const it=items.find(i=>i.id===recCtx?.itId);$("rsheet").hidden=true;if(it)openForm(it)};
+$("rform").onsubmit=async e=>{
+  e.preventDefault();
+  if(busy){toast("Počkej, přílohy se ještě načítají.");return}
+  if(sample){toast("Tohle je ukázka. Přidej vlastní termín.");return}
+  const it=items.find(i=>i.id===recCtx?.itId),h=it&&it.history.find(x=>x.rid===recCtx.rid);if(!h)return closeTop();
+  const d=$("r-date").value,cost=parseMoney($("r-cost").value),km=parseInt0($("r-km").value);
+  if(!isDate(d)||d>todayIso){toast("Datum musí být dnešní nebo starší.");return}
+  if(cost===null){toast("Částku zadej jako číslo, třeba 1500.");return}
+  if(h.kind==="cost"&&cost===""){toast("U výdaje zadej částku.");return}
+  if(km===null){toast("Stav km zadej celým číslem.");return}
+  if(!await storePending(rPick.list))return;
+  const snapH=JSON.stringify(it.history),snapKm=it.f.km;
+  Object.assign(h,{date:d,cost,where:$("r-where").value.trim().slice(0,80),km:km===""?"":km,note:$("r-note").value.trim().slice(0,1000),files:rPick.list.map(x=>x.ref)});
+  it.history.sort((a,b)=>a.date.localeCompare(b.date));
+  if(km!==""&&(it.f.km===""||km>it.f.km))it.f.km=km;
+  if(await persist()){afterRecordChange(it);toast("Záznam uložený.")}
+  else{it.history=JSON.parse(snapH);it.f.km=snapKm}
+};
+$("r-del").onclick=async()=>{
+  if(sample){toast("Tohle je ukázka. Přidej vlastní termín.");return}
+  const n=rPick.list.length;
+  if(!armed($("r-del"),"Smazat záznam",n?"Klepni znovu, smaže se i s přílohami":"Klepni znovu pro smazání"))return;
+  const it=items.find(i=>i.id===recCtx?.itId);if(!it)return closeTop();
+  const prev=it.history;it.history=it.history.filter(x=>x.rid!==recCtx.rid);
+  if(await persist()){afterRecordChange(it);toast("Záznam smazaný.")}else it.history=prev;
+};
+/* unused photos and PDFs are removed on the next start; kept while the undo of a restore can still bring them back */
+async function gcAttachments(){
+  try{
+    if(sample||!items.length)return;
+    const keep=new Set(),add=list=>list.forEach(it=>(it&&Array.isArray(it.history)?it.history:[]).forEach(h=>(h&&Array.isArray(h.files)?h.files:[]).forEach(f=>f&&keep.add(ATT+f.id))));
+    add(items);if(prevSnap&&Array.isArray(prevSnap.items))add(prevSnap.items);
+    for(const k of await Store.keys(ATT))if(!keep.has(k))await Store.del(k);
+  }catch(e){}
+}
 $("quick").innerHTML=`<option value="">Vlastní termín…</option>`+QUICK.map(([c,list],gi)=>`<optgroup label="${c}">${list.map((q,i)=>`<option value="${gi}-${i}">${q[0]}</option>`).join("")}</optgroup>`).join("");
 $("quick").onchange=()=>{
   const v=$("quick").value;if(!v)return;const[gi,i]=v.split("-").map(Number);const c=QUICK[gi][0],[n,ev,mode,notice]=QUICK[gi][1][i];
@@ -976,6 +1316,7 @@ function openDone(id){
   $("d-done").value=todayIso;$("d-done").max=todayIso;
   $("d-cost").value=it.expected!==""?String(it.expected).replace(".",","):"";$("d-where").value="";$("d-km").value="";
   $("d-km-l").hidden=FIELDS[it.cat]!=="auto";
+  $("d-note").value="";dPick.list=[];renderPicker(dPick);
   $("d-again").checked=!!it.every;$("d-again-l").hidden=!it.every;
   updateDoneHint();$("dsheet").hidden=false;lock(true);
 }
@@ -1001,9 +1342,11 @@ $("dform").onsubmit=async e=>{
   if(again&&(!isDate(nx)||nx<=dd)){toast("Příští termín musí být po datu provedení.");return}
   const cost=parseMoney($("d-cost").value);if(cost===null){toast("Cenu zadej jako číslo, třeba 1500.");return}
   const km=parseInt0($("d-km").value);if(km===null){toast("Stav km zadej celým číslem.");return}
+  if(busy){toast("Počkej, přílohy se ještě načítají.");return}
+  if(!await storePending(dPick.list))return;
   const snap=JSON.stringify(it);
   const calLeft=it.cal&&it.cal>=todayIso?it.cal:null;
-  it.history=[...it.history,{date:dd,due:actDate(it),cost,where:$("d-where").value.trim(),km:km===""?"":km,kind:"done"}].sort((a,b)=>a.date.localeCompare(b.date));
+  it.history=[...it.history,{rid:newRid(),date:dd,due:actDate(it),cost,where:$("d-where").value.trim(),km:km===""?"":km,kind:"done",note:$("d-note").value.trim().slice(0,1000),files:dPick.list.map(x=>x.ref)}].sort((a,b)=>a.date.localeCompare(b.date));
   if(km!==""&&(it.f.km===""||km>it.f.km))it.f.km=km;
   if(again){if(it.mode==="due"&&nx!==nextDue(it,dd))it.anchor=nx;it.date=nx;it.ack={}}
   else{it.status="done";it.doneAt=dd}
@@ -1031,7 +1374,7 @@ $("cform").onsubmit=async e=>{
   if(cost===""||cost===null){toast("Zadej částku, třeba 1200.");return}
   if(km===null){toast("Stav km zadej celým číslem.");return}
   const prev=it.history;
-  it.history=[...it.history,{date:d,due:null,cost,where:$("c-where").value.trim(),km:km===""?"":km,kind:"cost"}].sort((a,b)=>a.date.localeCompare(b.date));
+  it.history=[...it.history,{rid:newRid(),date:d,due:null,cost,where:$("c-where").value.trim(),km:km===""?"":km,kind:"cost",note:"",files:[]}].sort((a,b)=>a.date.localeCompare(b.date));
   if(await persist()){$("csheet").hidden=true;renderHist(it);render();toast(`Výdaj ${kc(cost)} zapsaný.`)}else it.history=prev;
 };
 
@@ -1074,17 +1417,6 @@ $("f-ics").onclick=()=>{
   if(actDate(it)<todayIso){toast("Termín už uplynul. Nejdřív ho označ jako hotový, nebo změň datum.");return}
   exportIcs([it],`${slug(it.name)}.ics`);
 };
-/* ---------- overview for the home-screen widget (Scriptable reads prehled-*.json) ---------- */
-function widgetJson(){
-  const list=active().filter(it=>isDate(it.date)).map(it=>({it,d:actDate(it)})).sort((a,b)=>a.d.localeCompare(b.d)||a.it.name.localeCompare(b.it.name,"cs"));
-  return JSON.stringify({prehled:1,app:"terminy",nazev:"Termíny",ulozeno:new Date().toISOString(),varovaniDni:7,ukazatPoTerminu:true,
-    polozky:list.slice(0,20).map(x=>({text:x.it.notice>0?`${x.it.name} – výpověď`:x.it.name,datum:x.d,info:x.it.cat})),udaje:[]},null,1);
-}
-$("b-widget").onclick=async()=>{
-  if(sample){toast("Teď vidíš ukázková data. Nejdřív přidej vlastní termíny.");return}
-  const r=await saveFile("prehled-terminy.json","application/json",widgetJson());
-  if(r==="shared"||r==="download")toast("Přehled pro widget je uložený.");
-};
 $("b-ics").onclick=()=>{
   if(sample){toast("Tohle jsou ukázková data.");return}
   const a=active(),up=a.filter(it=>actDate(it)>=todayIso);
@@ -1104,10 +1436,10 @@ $("b-csv").onclick=()=>{
   saveFile(`terminy-${todayIso}.csv`,"text/csv",csv(rows));
 };
 $("b-csvh").onclick=()=>{
-  const rows=[["Datum","Termín","Kategorie","Typ","Částka Kč","Kde / kdo","Stav km","Měl být hotov do","Včas"]];
+  const rows=[["Datum","Termín","Kategorie","Typ","Částka Kč","Kde / kdo","Stav km","Měl být hotov do","Včas","Poznámka","Přílohy"]];
   const all=visibleItems().flatMap(it=>it.history.map(h=>({it,h}))).sort((a,b)=>a.h.date.localeCompare(b.h.date));
   if(!all.length||sample){toast("Zatím nemáš žádnou historii.");return}
-  for(const {it,h} of all)rows.push([xd(h.date),it.name,it.cat,h.kind==="cost"?"výdaj":"splnění",num(h.cost),h.where,h.km,xd(h.due),h.due?(h.date<=h.due?"ano":"ne"):""]);
+  for(const {it,h} of all)rows.push([xd(h.date),it.name,it.cat,h.kind==="cost"?"výdaj":"splnění",num(h.cost),h.where,h.km,xd(h.due),h.due?(h.date<=h.due?"ano":"ne"):"",h.note,h.files.map(f=>f.name).join(", ")]);
   saveFile(`terminy-vydaje-${todayIso}.csv`,"text/csv",csv(rows));
 };
 
@@ -1138,7 +1470,29 @@ function renderBackupNote(){
   const due=backupDue();$("backup").classList.toggle("due",due);$("backupNote").hidden=!due;
   if(due)$("backupNote").textContent=meta.lastBackup?`Poslední záloha je z ${fmtD(meta.lastBackup)}. Ulož novou přes Záloha a data.`:"Ještě nemáš zálohu. Ulož ji přes Záloha a data, ať o termíny nepřijdeš.";
 }
-const backupJson=()=>JSON.stringify({app:"terminy",v:4,saved:new Date().toISOString(),items,meta:{cats:meta.cats,budgets:meta.budgets,backupEvery:meta.backupEvery,bigCost:meta.bigCost}},null,1);
+const backupObj=()=>({app:"terminy",v:5,saved:new Date().toISOString(),items,meta:{cats:meta.cats,budgets:meta.budgets,backupEvery:meta.backupEvery,bigCost:meta.bigCost}});
+const backupJson=()=>JSON.stringify(backupObj(),null,1);
+const allRefs=()=>{const m=new Map();for(const it of items)for(const h of it.history)for(const f of h.files)m.set(f.id,f);return m};
+/* the file backup carries the photos and PDFs too. They are read when the panel opens, because iPhone
+   allows the share sheet only straight after a tap, not after reading many files. The rest is built on tap. */
+const attCache=new Map(),attMissing=new Set();
+function attsReady(){for(const id of allRefs().keys())if(!attCache.has(id)&&!attMissing.has(id))return false;return true}
+async function loadAtts(){
+  const refs=allRefs();
+  for(const id of [...attCache.keys()])if(!refs.has(id))attCache.delete(id);
+  for(const [id,f] of refs){
+    if(attCache.has(id)||attMissing.has(id))continue;
+    const v=await Store.get(ATT+id);
+    if(v&&typeof v.data==="string")attCache.set(id,{name:f.name,type:f.type,size:f.size,data:v.data});else attMissing.add(id);
+  }
+}
+function refreshSaveBtn(){const need=!sample&&visibleItems().length>0,ready=!need||attsReady(),b=$("b-save");b.disabled=!ready;b.textContent=ready?"Uložit zálohu":"Připravuji zálohu…"}
+function startPrepare(){refreshSaveBtn();if(attsReady())return;loadAtts().then(refreshSaveBtn,refreshSaveBtn)}
+function buildBackup(){
+  const atts={};let missing=0;
+  for(const id of allRefs().keys()){const a=attCache.get(id);if(a)atts[id]=a;else missing++}
+  const o=backupObj();o.atts=atts;return {json:JSON.stringify(o,null,1),missing};
+}
 async function markBackup(){meta.lastBackup=todayIso;await saveMeta();renderBackupNote()}
 function askBackupSaved(q){$("b-confirm-t").textContent=q;$("b-confirm").hidden=false;$("b-confirm-yes").focus()}
 $("b-confirm-yes").onclick=async()=>{$("b-confirm").hidden=true;await markBackup();
@@ -1149,11 +1503,20 @@ function parseBackup(text){
   let d;try{d=JSON.parse(String(text).replace(/^\uFEFF/,"").trim())}catch(e){return null}
   const arr=Array.isArray(d)?d:d&&d.app==="terminy"&&Array.isArray(d.items)?d.items:null;
   if(!arr||!arr.every(x=>x&&typeof x.name==="string"&&x.name.trim()&&isDate(x.date)))return null;
-  return {items:arr,meta:d&&d.meta||null,saved:d&&typeof d.saved==="string"?d.saved:null};
+  const atts={};
+  if(d&&d.atts&&typeof d.atts==="object"&&!Array.isArray(d.atts))for(const [id,a] of Object.entries(d.atts)){
+    if(!/^[\w-]{4,40}$/.test(id)||!a||typeof a.data!=="string")continue;
+    const m=/^data:(image\/(?:jpeg|png|webp)|application\/pdf);base64,/.exec(a.data);if(!m)continue;
+    atts[id]={name:String(a.name||"příloha").slice(0,120),type:m[1],size:Number.isFinite(+a.size)?+a.size:0,data:a.data};
+  }
+  return {items:arr,meta:d&&d.meta||null,saved:d&&typeof d.saved==="string"?d.saved:null,atts};
 }
 function resetFile(){pendingFile=null;$("b-file").value="";$("b-file-info").hidden=true;$("b-file-apply").hidden=true;disarm($("b-file-apply"),"Nahradit data zálohou")}
 const snapValid=p=>p&&Array.isArray(p.items)&&typeof p.saved==="string"&&!isNaN(new Date(p.saved))&&dayDiff(todayIso,iso(new Date(p.saved)))<=30;
 async function applyBackup(b){
+  /* photos and PDFs first: if they do not fit, stop before anything else changes */
+  for(const [id,a] of Object.entries(b.atts||{}))if(!await Store.set(ATT+id,a)){toast("Obnovu jsem zastavil: přílohy se nevešly do úložiště. Uvolni místo v iPhonu a zkus to znovu.");return false}
+  attMissing.clear();
   /* keep what is here now so the restore can be undone; with only sample data there is nothing to keep */
   const snapNow=sample?null:{saved:new Date().toISOString(),items:JSON.parse(JSON.stringify(items)),meta:JSON.parse(JSON.stringify(meta))};
   if(!await Store.set(PREV,snapNow)){toast("Obnovu jsem zastavil: nepodařilo se uložit kopii současných dat, takže by nešla vrátit. Uvolni místo v iPhonu a zkus to znovu.");return false}
@@ -1177,11 +1540,15 @@ async function undoRestore(){
 function describeBackup(b,fname){
   const n=b.items.length,saved=b.saved&&!isNaN(new Date(b.saved))?new Date(b.saved).toLocaleString("cs-CZ",{day:"numeric",month:"numeric",year:"numeric",hour:"2-digit",minute:"2-digit"}):null;
   const cur=sample?0:visibleItems().length;
-  return `${fname?fname+": ":""}záloha${saved?` z ${saved}`:""}, ${n} ${pl(n,"termín","termíny","termínů")}. Teď máš ${cur} ${pl(cur,"termín","termíny","termínů")}. Obnovení je přepíše, ale půjde vrátit.`;
+  const na=Object.keys(b.atts||{}).length,refs=b.items.reduce((s,x)=>s+(Array.isArray(x.history)?x.history:[]).reduce((t,h)=>t+(h&&Array.isArray(h.files)?h.files.length:0),0),0);
+  const att=na?`, ${na} ${pl(na,"příloha","přílohy","příloh")}`:refs?", bez příloh (fotky a PDF musí být v zařízení)":"";
+  return `${fname?fname+": ":""}záloha${saved?` z ${saved}`:""}, ${n} ${pl(n,"termín","termíny","termínů")}${att}. Teď máš ${cur} ${pl(cur,"termín","termíny","termínů")}. Obnovení je přepíše, ale půjde vrátit.`;
 }
 $("backup").onclick=async()=>{
   const n=sample?0:visibleItems().length;
-  $("b-size").textContent=!n?"Zatím nemáš žádná vlastní data.":`${n} ${pl(n,"termín","termíny","termínů")}.${meta.lastBackup?` Poslední záloha ${fmtD(meta.lastBackup)}.`:" Zatím žádná záloha."}`;
+  const refs=sample?new Map():allRefs(),asz=[...refs.values()].reduce((s,f)=>s+f.size,0);
+  $("b-size").textContent=!n?"Zatím nemáš žádná vlastní data.":`${n} ${pl(n,"termín","termíny","termínů")}${refs.size?`, ${refs.size} ${pl(refs.size,"příloha","přílohy","příloh")} (${fmtSize(asz)})`:""}.${meta.lastBackup?` Poslední záloha ${fmtD(meta.lastBackup)}.`:" Zatím žádná záloha."}`;
+  attMissing.clear();startPrepare();
   $("b-text").value="";disarm($("b-restore"),"Obnovit z textu");resetFile();renderTrash();$("b-confirm").hidden=true;
   const p=prevSnap||await Store.get(PREV);const ok=snapValid(p);$("b-undo").hidden=!ok;
   if(ok){$("b-undo").dataset.label=`Vrátit stav před obnovou z ${fmtD(iso(new Date(p.saved)))}`;disarm($("b-undo"),$("b-undo").dataset.label)}
@@ -1192,7 +1559,10 @@ $("b-close").onclick=closeSheets;
 $("b-undo").onclick=()=>{if(!armed($("b-undo"),$("b-undo").dataset.label||"Vrátit stav před obnovou","Klepni znovu, data se přepíšou"))return;undoRestore()};
 $("b-save").onclick=async()=>{
   if(sample||!visibleItems().length){toast("Zatím není co zálohovat.");return}
-  const r=await saveFile(`terminy-zaloha-${todayIso}.json`,"application/json",backupJson());
+  if(!attsReady()){toast("Záloha se ještě připravuje, klepni za chvíli znovu.");startPrepare();return}
+  const bk=buildBackup();
+  if(bk.missing)toast(`${bk.missing} ${pl(bk.missing,"příloha","přílohy","příloh")} v zařízení chybí, záloha bude bez nich.`);
+  const r=await saveFile(`terminy-zaloha-${todayIso}.json`,"application/json",bk.json);
   /* the share sheet or a download does not prove the file was kept, so ask */
   if(r==="shared"||r==="download")askBackupSaved(r==="shared"?"Je záloha opravdu uložená, třeba v Souborech nebo na iCloudu?":"Stáhl se soubor se zálohou? Ulož si ho na bezpečné místo.");
 };
@@ -1230,7 +1600,7 @@ $("s-badge").onclick=async()=>{try{await Notification.requestPermission()}catch(
 /* ---------- keep the day current; shortcuts ---------- */
 document.addEventListener("visibilitychange",()=>{if(!document.hidden){const old=todayIso;setToday();if(todayIso!==old)render()}});
 let openAddOnBoot=false;
-try{const q=new URLSearchParams(location.search);if(q.get("view")==="over")view="over";if(q.get("view")==="list")view="list";if(q.has("add")){view="list";openAddOnBoot=true}}catch(e){}
+try{const q=new URLSearchParams(location.search);if(["over","list","hist"].includes(q.get("view")))view=q.get("view");if(q.has("add")){view="list";openAddOnBoot=true}}catch(e){}
 
 /* ---------- boot ---------- */
 (async()=>{
@@ -1244,6 +1614,7 @@ try{const q=new URLSearchParams(location.search);if(q.get("view")==="over")view=
   }else{items=SAMPLE.map(normalize);sample=true}
   render();
   if(openAddOnBoot)openForm(null);
+  if(Array.isArray(v))setTimeout(gcAttachments,1500);
 })();
 </script>
 <script>
